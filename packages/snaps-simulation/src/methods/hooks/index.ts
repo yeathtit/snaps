@@ -12,3 +12,4 @@ export * from './start-trace';
 export * from './state';
 export * from './track-error';
 export * from './track-event';
+export * from './web-sockets';

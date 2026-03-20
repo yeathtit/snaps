@@ -27,6 +27,7 @@ import type {
   SnapResponseWithInterface,
   SnapResponseWithoutInterface,
   TransactionOptions,
+  WebSocketEventOptions,
 } from './types';
 
 const log = createModuleLogger(rootLogger, 'helpers');
@@ -195,6 +196,15 @@ export type SnapHelpers = {
    * @returns The response promise, with extra {@link SnapRequestObject} fields.
    */
   onClientRequest(request: Omit<RequestOptions, 'origin'>): SnapRequest;
+
+  /**
+   * Send a WebSocket event to the Snap's `onWebSocketEvent` handler.
+   *
+   * @param options - The WebSocket event options.
+   * @param options.event - The WebSocket event to send to the Snap.
+   * @returns The response promise, with extra {@link SnapRequestObject} fields.
+   */
+  onWebSocketEvent(options: WebSocketEventOptions): SnapRequest;
 
   /**
    * Mock a JSON-RPC request. This will cause the snap to respond with the
@@ -641,6 +651,26 @@ export function getHelpers({
         runSaga,
         handler: HandlerType.OnClientRequest,
         request,
+      });
+    },
+
+    // This can't be async because it returns a `SnapRequest`.
+    // eslint-disable-next-line @typescript-eslint/promise-function-async
+    onWebSocketEvent: ({ event }: WebSocketEventOptions) => {
+      log('Sending WebSocket event %o.', event);
+
+      return handleRequest({
+        snapId,
+        store,
+        executionService,
+        controllerMessenger,
+        simulationOptions: options,
+        runSaga,
+        handler: HandlerType.OnWebSocketEvent,
+        request: {
+          method: '',
+          params: { event },
+        },
       });
     },
 

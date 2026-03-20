@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add WebSocket simulation support ([#3404](https://github.com/MetaMask/snaps/pull/3404))
+  - Add `openWebSocket`, `closeWebSocket`, `sendWebSocketMessage`, and `getWebSockets` hooks for `snap_openWebSocket`, `snap_closeWebSocket`, `snap_sendWebSocketMessage`, and `snap_getWebSockets` methods.
+  - Add `onWebSocketEvent` helper to send WebSocket events to the Snap's `onWebSocketEvent` handler.
+
 ## [4.1.1]
 
 ### Changed

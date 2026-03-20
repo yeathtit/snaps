@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `onWebSocketEvent` helper to `installSnap` return value ([#3404](https://github.com/MetaMask/snaps/pull/3404))
+  - This allows tests to send WebSocket events to the Snap's `onWebSocketEvent` handler.
+- Export `WebSocketEventOptions` type ([#3404](https://github.com/MetaMask/snaps/pull/3404))
+
 ## [10.1.1]
 
 ### Changed

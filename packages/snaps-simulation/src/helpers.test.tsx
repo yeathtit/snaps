@@ -818,6 +818,79 @@ describe('helpers', () => {
     });
   });
 
+  describe('onWebSocketEvent', () => {
+    it('sends a WebSocket event and returns the result', async () => {
+      jest.spyOn(console, 'log').mockImplementation();
+
+      const { snapId, close: closeServer } = await getMockServer({
+        sourceCode: `
+          module.exports.onWebSocketEvent = async ({ event }) => {
+            return event.type;
+          };
+         `,
+      });
+
+      const { onWebSocketEvent, close } = await installSnap(snapId);
+      const response = await onWebSocketEvent({
+        event: {
+          type: 'open',
+          id: 'socket-1',
+          origin: 'wss://example.com',
+        },
+      });
+
+      expect(response).toStrictEqual(
+        expect.objectContaining({
+          response: {
+            result: 'open',
+          },
+        }),
+      );
+
+      await close();
+      await closeServer();
+    });
+
+    it('sends a WebSocket message event', async () => {
+      jest.spyOn(console, 'log').mockImplementation();
+
+      const { snapId, close: closeServer } = await getMockServer({
+        sourceCode: `
+          module.exports.onWebSocketEvent = async ({ event }) => {
+            if (event.type === 'message') {
+              return event.data.message;
+            }
+            return null;
+          };
+         `,
+      });
+
+      const { onWebSocketEvent, close } = await installSnap(snapId);
+      const response = await onWebSocketEvent({
+        event: {
+          type: 'message',
+          id: 'socket-1',
+          origin: 'wss://example.com',
+          data: {
+            type: 'text',
+            message: 'Hello from server!',
+          },
+        },
+      });
+
+      expect(response).toStrictEqual(
+        expect.objectContaining({
+          response: {
+            result: 'Hello from server!',
+          },
+        }),
+      );
+
+      await close();
+      await closeServer();
+    });
+  });
+
   describe('mockJsonRpc', () => {
     it('mocks a JSON-RPC method', async () => {
       jest.spyOn(console, 'log').mockImplementation();

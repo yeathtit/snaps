@@ -1,8 +1,8 @@
-import { createStore } from './store';
-import { getMockOptions } from '../test-utils';
+import { createStore } from "./store";
+import { getMockOptions } from "../test-utils";
 
-describe('createStore', () => {
-  it('creates a Redux store', () => {
+describe("createStore", () => {
+  it("creates a Redux store", () => {
     const { store } = createStore(getMockOptions());
 
     expect(store).toBeDefined();
@@ -30,17 +30,20 @@ describe('createStore', () => {
         "ui": {
           "current": null,
         },
+        "webSockets": {
+          "webSockets": {},
+        },
       }
     `);
   });
 
-  it('creates a Redux store with initial state', () => {
+  it("creates a Redux store with initial state", () => {
     const { store } = createStore(
       getMockOptions({
         state: {
-          foo: 'bar',
+          foo: "bar",
         },
-      }),
+      })
     );
 
     expect(store).toBeDefined();
@@ -68,17 +71,20 @@ describe('createStore', () => {
         "ui": {
           "current": null,
         },
+        "webSockets": {
+          "webSockets": {},
+        },
       }
     `);
   });
 
-  it('creates a Redux store with initial unencrypted state', () => {
+  it("creates a Redux store with initial unencrypted state", () => {
     const { store } = createStore(
       getMockOptions({
         unencryptedState: {
-          foo: 'bar',
+          foo: "bar",
         },
-      }),
+      })
     );
 
     expect(store).toBeDefined();
@@ -105,6 +111,9 @@ describe('createStore', () => {
         },
         "ui": {
           "current": null,
+        },
+        "webSockets": {
+          "webSockets": {},
         },
       }
     `);

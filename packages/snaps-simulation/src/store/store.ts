@@ -7,6 +7,7 @@ import { notificationsSlice } from './notifications';
 import { setState, stateSlice } from './state';
 import { trackablesSlice } from './trackables';
 import { uiSlice } from './ui';
+import { webSocketsSlice } from './web-sockets';
 import type { SimulationOptions } from '../options';
 
 /**
@@ -27,6 +28,7 @@ export function createStore({ state, unencryptedState }: SimulationOptions) {
       trackables: trackablesSlice.reducer,
       ui: uiSlice.reducer,
       chain: chainSlice.reducer,
+      webSockets: webSocketsSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({ thunk: false, serializableCheck: false }).concat(
