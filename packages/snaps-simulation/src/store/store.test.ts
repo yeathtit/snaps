@@ -30,6 +30,9 @@ describe('createStore', () => {
         "ui": {
           "current": null,
         },
+        "webSockets": {
+          "webSockets": {},
+        },
       }
     `);
   });
@@ -68,6 +71,9 @@ describe('createStore', () => {
         "ui": {
           "current": null,
         },
+        "webSockets": {
+          "webSockets": {},
+        },
       }
     `);
   });
@@ -105,6 +111,9 @@ describe('createStore', () => {
         },
         "ui": {
           "current": null,
+        },
+        "webSockets": {
+          "webSockets": {},
         },
       }
     `);

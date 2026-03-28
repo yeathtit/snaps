@@ -24,6 +24,7 @@ import type {
   TrackEventParams,
   AuxiliaryFileEncoding,
   Component,
+  GetWebSocketsResult,
   InterfaceState,
   InterfaceContext,
   SnapId,
@@ -59,6 +60,10 @@ import {
   getEndTraceImplementation,
   getStartTraceImplementation,
   getSetCurrentChainImplementation,
+  getOpenWebSocketImplementation,
+  getCloseWebSocketImplementation,
+  getSendWebSocketMessageImplementation,
+  getGetWebSocketsImplementation,
 } from './methods/hooks';
 import { getGetMnemonicSeedImplementation } from './methods/hooks/get-mnemonic-seed';
 import { createJsonRpcEngine } from './middleware';
@@ -353,6 +358,40 @@ export type PermittedMiddlewareHooks = {
    * @returns The trace data.
    */
   endTrace(request: EndTraceRequest): void;
+
+  /**
+   * A hook that opens a mock WebSocket connection.
+   *
+   * @param url - The WebSocket URL.
+   * @param protocols - Optional array of subprotocols.
+   * @returns A promise that resolves to the unique identifier of the
+   * WebSocket connection.
+   */
+  openWebSocket(url: string, protocols?: string[]): Promise<string>;
+
+  /**
+   * A hook that closes a mock WebSocket connection.
+   *
+   * @param id - The unique identifier of the WebSocket connection.
+   */
+  closeWebSocket(id: string): void;
+
+  /**
+   * A hook that simulates sending a message over a mock WebSocket. In the
+   * simulation, this is a no-op.
+   *
+   * @param id - The unique identifier of the WebSocket connection.
+   * @param data - The message data to send.
+   * @returns A promise that resolves when the (simulated) message is sent.
+   */
+  sendWebSocketMessage(id: string, data: string | number[]): Promise<void>;
+
+  /**
+   * A hook that returns all connected mock WebSockets.
+   *
+   * @returns An array of connected WebSocket connection objects.
+   */
+  getWebSockets(): GetWebSocketsResult;
 };
 
 export type MultichainMiddlewareHooks = {
@@ -645,6 +684,11 @@ export function getPermittedHooks(
     trackEvent: getTrackEventImplementation(runSaga),
     startTrace: getStartTraceImplementation(runSaga),
     endTrace: getEndTraceImplementation(runSaga),
+
+    openWebSocket: getOpenWebSocketImplementation(runSaga),
+    closeWebSocket: getCloseWebSocketImplementation(runSaga),
+    sendWebSocketMessage: getSendWebSocketMessageImplementation(runSaga),
+    getWebSockets: getGetWebSocketsImplementation(runSaga),
   };
 }
 

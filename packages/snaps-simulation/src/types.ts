@@ -3,6 +3,7 @@ import type {
   EnumToUnion,
   TrackableError,
   TraceRequest,
+  WebSocketEvent,
 } from '@metamask/snaps-sdk';
 import type { JSXElement } from '@metamask/snaps-sdk/jsx';
 import type { InferMatching } from '@metamask/snaps-utils';
@@ -50,6 +51,16 @@ export type RequestOptions = {
  * that it does not have an `origin` property.
  */
 export type CronjobOptions = Omit<RequestOptions, 'origin'>;
+
+/**
+ * The options for triggering a WebSocket event in the Snap's
+ * `onWebSocketEvent` handler.
+ *
+ * @property event - The WebSocket event to send to the Snap.
+ */
+export type WebSocketEventOptions = {
+  event: WebSocketEvent;
+};
 
 /**
  * The options to use for transaction requests.
@@ -554,6 +565,15 @@ export type Snap = {
    * @returns The response promise, with extra {@link SnapRequestObject} fields.
    */
   onClientRequest(request: Omit<RequestOptions, 'origin'>): SnapRequest;
+
+  /**
+   * Send a WebSocket event to the Snap's `onWebSocketEvent` handler.
+   *
+   * @param options - The WebSocket event options.
+   * @param options.event - The WebSocket event to send to the Snap.
+   * @returns The response promise, with extra {@link SnapRequestObject} fields.
+   */
+  onWebSocketEvent(options: WebSocketEventOptions): SnapRequest;
 
   /**
    * Mock a JSON-RPC request. This will cause the snap to respond with the

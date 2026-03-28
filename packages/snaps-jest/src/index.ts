@@ -38,4 +38,5 @@ export type {
   SnapRequest,
   SnapRequestObject,
   TransactionOptions,
+  WebSocketEventOptions,
 } from '@metamask/snaps-simulation';

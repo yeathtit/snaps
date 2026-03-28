@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add tests for WebSocket functionality ([#3404](https://github.com/MetaMask/snaps/pull/3404))
+
 ## [2.2.0]
 
 ### Added

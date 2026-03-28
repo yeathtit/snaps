@@ -210,6 +210,7 @@ export async function installSnap<
     onNameLookup,
     onProtocolRequest,
     onClientRequest,
+    onWebSocketEvent,
     mockJsonRpc,
     mockJsonRpcOnce,
     close,
@@ -233,6 +234,7 @@ export async function installSnap<
     onNameLookup,
     onProtocolRequest,
     onClientRequest,
+    onWebSocketEvent,
     mockJsonRpc,
     mockJsonRpcOnce,
     close: async () => {
